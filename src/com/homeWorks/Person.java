@@ -1,8 +1,5 @@
 package com.homeWorks;
 
-import org.w3c.dom.ls.LSOutput;
-
-import java.sql.SQLOutput;
 
 public class Person {
 
@@ -22,9 +19,7 @@ public class Person {
 
 
 
-    public String getName() {
-        return name;
-    }
+    public String getName() {return name;}
 
     public String getGender() {
         return gender;

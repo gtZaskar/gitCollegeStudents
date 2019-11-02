@@ -1,12 +1,9 @@
 package com.homeWorks;
 
-import org.w3c.dom.ls.LSOutput;
-
-import java.sql.SQLOutput;
-
 public class Student extends Person implements Drinkable {
 
     public String idNumber;
+
     public double gpa;
 
     private double howDrink;
@@ -24,34 +21,31 @@ public class Student extends Person implements Drinkable {
     private final static double HIGH_DRINKABLE_MAX = 10.0;
 
     @Override
-    public Intoxication drinkUp(double increase) {
+    public Intoxication drinkUp(double increase) throws StudentCanNotDrinkException {
+        if (this.age<18) {
+            throw new StudentCanNotDrinkException("Student " + this.name + "too young");
+
+        }
         howDrink += increase;
-        if (howDrink >= LOW_DRINKABLE_MIN) {
+
+        if (howDrink >= LOW_DRINKABLE_MIN && howDrink <= LOW_DRINKABLE_MAX) {
             return Intoxication.LOW;
+
         } else {
-            if (howDrink <= LOW_DRINKABLE_MAX) {
-                return Intoxication.LOW;
+            if (howDrink >= MEDIUM_DRINKABLE_MIN && howDrink <= MEDIUM_DRINKABLE_MAX) {
+                return Intoxication.MEDIUM;
+
             } else {
-                if (howDrink >= MEDIUM_DRINKABLE_MIN) {
-                    return Intoxication.MEDIUM;
+                if (howDrink >= HIGH_DRINKABLE_MIN && howDrink <= HIGH_DRINKABLE_MAX) {
+                    return Intoxication.HIGH;
+
                 } else {
-                    if (howDrink <= MEDIUM_DRINKABLE_MAX) {
-                        return Intoxication.MEDIUM;
+                    if (howDrink < LOW_DRINKABLE_MIN) {
+                        return Intoxication.GOOD;
                     } else {
-                        if (howDrink >= HIGH_DRINKABLE_MIN) {
-                            return Intoxication.HIGH;
-                        } else {
-                            if (howDrink <= HIGH_DRINKABLE_MAX) {
-                                return Intoxication.HIGH;
-                            } else {
-                                if (howDrink < LOW_DRINKABLE_MIN) {
-                                    return Intoxication.GOOD;
-                                } else {
-                                    if (howDrink > HIGH_DRINKABLE_MAX) {
-                                        return Intoxication.DEATH;
-                                    }
-                                }
-                            }
+                        if (howDrink > HIGH_DRINKABLE_MAX) {
+                            return Intoxication.DEATH;
+
                         }
                     }
                 }
@@ -69,10 +63,10 @@ public class Student extends Person implements Drinkable {
     public Student() {
         System.out.println("I am a student ");
     }
-    public void drink(){
-        System.out.println();
-    }
 
+   /* public void drink() {
+        System.out.println(howDrink);
+    }*/
 
 
     public String getIdNumber() {
@@ -102,7 +96,6 @@ public class Student extends Person implements Drinkable {
                 ", howDrink=" + howDrink +
                 '}';
     }
-
 
 
 }
